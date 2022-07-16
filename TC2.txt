@@ -1,0 +1,54 @@
+package com.maveric.project;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.android.AndroidDriver;
+
+public class TC2Project {
+
+	public static void main(String[] args) throws MalformedURLException {
+		// TODO Auto-generated method stub
+
+		 DesiredCapabilities cap=new DesiredCapabilities();
+	        cap.setCapability("platformName", "android");
+	        cap.setCapability("deviceName", "redmi");  
+	       cap.setCapability("app","C:\\Users\\poonkuzhalim\\Downloads\\khan-academy-7-3-2.apk" );
+	       AndroidDriver driver=new AndroidDriver(new URL("http://localhost:4723/wd/hub"),cap);
+	       
+
+			//AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://hub.browserstack.com/wd/hub"),
+			//		cap);
+//TC 2:Navigate to Seacrh page ,enter the text and clear it,validate the clear functionality is working as expected
+			driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+			driver.findElement(AppiumBy.androidUIAutomator("UiSelector().text(\"Dismiss\")")).click();
+			driver.findElement(AppiumBy.androidUIAutomator("UiSelector().text(\"Search\")")).click();
+			driver.findElement(AppiumBy.androidUIAutomator("UiSelector().text(\"Search\")")).sendKeys("math");
+			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc=\"Dismiss\"]")).click();
+			driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+			String strblank=driver.findElement(AppiumBy.androidUIAutomator("UiSelector().text(\"Search\")")).getText();
+			//driver.findElement(AppiumBy.androidUIAutomator("UiSelector().text(\"Filt
+			boolean bFilter=driver.findElement(AppiumBy.androidUIAutomator("UiSelector().text(\"Filter\")")).isEnabled();	
+			System.out.println();
+			System.out.println("value is"+strblank);	
+			
+				if (bFilter=true) 
+			{
+				System.out.println("Clear functionality is working as expected");
+			
+			}
+				else
+				{
+					System.out.println("Clear functionality is working as NOT expected");
+				}
+			
+		driver.quit();
+	}
+
+}
